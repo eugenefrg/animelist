@@ -16,15 +16,6 @@ interface EpisodeWatchState { id: string, watched: boolean }
 
 export default function Post({ anime, episodes }: { anime: any, episodes: any }) {
 
-    if (!anime) {
-        return <main
-            className={`flex min-h-screen flex-col items-center p-8 ${inter.className}`}
-        >
-            <CircularProgress />
-        </main>
-    }
-
-
     /**
      * The key used to access user preferences data in local storage.
      */
@@ -103,6 +94,15 @@ export default function Post({ anime, episodes }: { anime: any, episodes: any })
         setWatchedEpisodes(newEpisodeState as EpisodeWatchState[])
     }
 
+
+    if (!anime) {
+        return <main
+            className={`flex min-h-screen flex-col items-center p-8 ${inter.className}`}
+        >
+            <CircularProgress />
+        </main>
+    }
+
     const { attributes } = anime.data
     const currentPreference = userPreferenceData && userPreferenceData?.find(preference => preference.animeId === anime.data.id) || { favorite: false, starred: false }
 
@@ -165,7 +165,7 @@ export default function Post({ anime, episodes }: { anime: any, episodes: any })
                             <Grid item lg={12} xs={12}>
                                 Characters
                             </Grid>
-                            {Array.from(Array(4)).map(() => (<Grid item lg={3}>
+                            {Array.from(Array(4)).map((i, index) => (<Grid item lg={3} key={"img" + index} >
                                 <img src="https://placehold.co/400x400" />
                             </Grid>))}
                         </Grid>
@@ -175,9 +175,8 @@ export default function Post({ anime, episodes }: { anime: any, episodes: any })
                         <Box className="space-y-4">
                             {episodes.map((episode: any) => {
                                 const episodeState = watchedEpisodes.find(currentEpisode => currentEpisode.id === episode.id)
-                                console.log(episodeState)
                                 return (
-                                    <Box className="flex space-x-2">
+                                    <Box className="flex space-x-2" key={episode.id}>
                                         <Button onClick={() => handleWatch(episode.id)}>
                                             <VisibilityIcon color={episodeState?.watched ? "primary" : "disabled"} />
                                         </Button>
