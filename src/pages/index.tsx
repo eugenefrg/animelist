@@ -142,6 +142,7 @@ export default function Home() {
               onStar={(id) => handlePreference(id, "STAR")}
               favorite={'favorite' in anime ? anime.favorite || false : false}
               starred={'starred' in anime ? anime.starred || false : false}
+              onNavigate={(id) => window.location.href = `${window.location.origin}/${id}`}
             />
           )}
         </Grid>
@@ -149,6 +150,3 @@ export default function Home() {
     </main>
   )
 }
-
-// TODO
-// Able to click an anime to show more details

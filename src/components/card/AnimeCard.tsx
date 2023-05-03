@@ -18,6 +18,8 @@ interface AnimeCardProps {
 
     /* A boolean indicating if the anime is starred. */
     starred: boolean;
+
+    onNavigate: (id: string) => void;
 }
 
 /**
@@ -26,14 +28,17 @@ interface AnimeCardProps {
  * @param {AnimeCardProps} props - The props object containing the anime object and callback functions for favorite and star actions.
  * @returns {JSX.Element} - A component to display the anime card.
  */
-const AnimeCard: React.FC<AnimeCardProps> = ({ anime, onFavorite, onStar, favorite, starred }) => {
+const AnimeCard: React.FC<AnimeCardProps> = ({ anime, onFavorite, onStar, favorite, starred, onNavigate }) => {
 
     return <Grid item lg={3}>
         <Card>
             <CardMedia
                 component="img"
                 image={anime.attributes.posterImage.medium}
-                alt={anime.attributes.titles.en} />
+                alt={anime.attributes.titles.en}
+                onClick={() => onNavigate(anime.id)}
+                className="cursor-pointer"
+            />
             <CardContent>
                 <Typography variant="body1" color="text.secondary">
                     {anime.attributes.titles.en_jp}
